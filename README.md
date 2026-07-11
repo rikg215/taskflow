@@ -1,10 +1,11 @@
-# 🚀 TaskFlow — Personal Mission Control
+# 🚀 TaskFlow v2.0 — Personal Mission Control
 
-> **A KANBAN-style task tracker with animated health bars, drag-and-drop, completion notes, and real-time progress visualization.**
+> **KANBAN board + Runway timeline + BurnChart telemetry. Dual-view task tracker with velocity tracking, drag-to-reschedule, and Web Audio sound effects.**
 >
-> Deployed on a 6-node bare-metal Kubernetes cluster. Built in one day as a side-quest that became a flagship.
+> Deployed on a 6-node bare-metal Kubernetes cluster. Built as a side-quest that became the flagship portfolio piece.
 
 ![Status: Shipped](https://img.shields.io/badge/status-shipped-success)
+![Version: 2.0](https://img.shields.io/badge/version-2.0-blue)
 ![Frontend: React](https://img.shields.io/badge/frontend-react_18-61DAFB?logo=react)
 ![Backend: FastAPI](https://img.shields.io/badge/backend-fastapi-009688?logo=fastapi)
 ![Database: PostgreSQL](https://img.shields.io/badge/db-postgresql_16-4169E1?logo=postgresql)
@@ -13,18 +14,52 @@
 
 ---
 
-## 🎯 What It Does
+## What's New in v2.0
 
-TaskFlow replaces scattered notes, spreadsheets, and mental tracking with a **single source of truth** for every project, certification, and career goal. It was built to manage:
+| Feature | Description |
+|---------|-------------|
+| **🏃 Runway View** | Gantt-style timeline with drag-to-reschedule, weight-proportional blocks, sub-row packing, zoom levels (S/M/L), NOW scanline, weekend shading, per-lane target date markers |
+| **📊 BurnChart** | Animated SVG cumulative burn-up chart per track — 56-day lookback + velocity projection to target date |
+| **📡 Telemetry Engine** | 21-day rolling velocity (tasks/week), ETA projection, margin calculation, intercept states (nominal/caution/behind/stalled/idle/shipped), 8-week sparklines |
+| **🔄 View Toggle** | KANBAN ↔ Runway, persisted in localStorage |
+| **🎯 Holding Pattern** | Unscheduled tasks parked at the bottom with auto-"slot" button that assigns to the earliest open day (max 2/day per track) |
+| **🎨 Green Theme** | Color palette shifted to green-tinted dark theme |
 
-- **12 active tracks** across certifications (CKA), courses (Ansible, Python), projects (k8s-kubeadm-lab, CI/CD), side-quests (Build-Your-Own-Container), and career (Job Search)
-- **108+ tasks** with weights, scheduled dates, step progress, and completion notes
-- A 4-column KANBAN board with full drag-and-drop reordering
-- Animated health bars showing real-time completion percentages
-- Web Audio API sound effects on task/track completion (with mute toggle)
-- Dark-only theme with Framer Motion animations throughout
+## View Modes
 
-## 🏗 Architecture
+### 🏃 Runway (Timeline View)
+```
+ JUL 7      JUL 8      JUL 9      JUL 10     JUL 11     JUL 12     JUL 13
+   │          │          │          │    NOW   │          │          │
+━━━┿━━━━━━━━━━┿━━━━━━━━━━┿━━━━━━━━━━┿━━━━╋━━━━━┿━━━━━━━━━━┿━━━━━━━━━━┿━━━━━
+ CKA ┊[Networking]══╗  ┊[Service Net] ┊          ┊ [Ingress═══════════╗
+     ┊              ║  ┊[DNS+CoreDNS] ┊          ┊                    ║
+     ┊              ╚══╝              ┊          ┊                    ╚══
+ ANS ┊                               ┊          ┊ [Handlers+Roles]
+     ┊                               ┊          ┊
+```
+
+- **Drag blocks horizontally** to reschedule tasks
+- **Click the checkmark** to mark complete inline
+- **Block width** scales with task weight (1-5)
+- **Red glow** = overdue, **green strikethrough** = done
+- **Target icons** mark track deadlines on each lane
+
+### 📋 KANBAN (Board View)
+```
+  BACKLOG          TODO          IN PROGRESS        DONE
+  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐
+  │ task 1  │    │ task 5  │    │ task 8  │    │ task 10 │
+  │ task 2  │    │ task 6  │    │ task 9  │    │ task 11 │
+  └─────────┘    └─────────┘    └─────────┘    └─────────┘
+       ↕ drag-and-drop between columns
+```
+
+- Classic 4-column KANBAN with full drag-and-drop
+- Task cards show weight bar, scheduled day badge, progress, notes count
+- Dragging to "Done" auto-completes
+
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -33,176 +68,115 @@ TaskFlow replaces scattered notes, spreadsheets, and mental tracking with a **si
 │   ┌──────────────┐     ┌──────────────┐                           │
 │   │  frontend     │────▶│  backend     │───┐                       │
 │   │  React 18/TS  │     │  FastAPI      │   │                       │
-│   │  Deployment   │     │  Deployment   │   │                       │
 │   │  port 80      │     │  port 8080    │   │                       │
-│   └──────┬───────┘     └──────┬───────┘   │                       │
-│          │                    │           │                       │
-│          ▼                    ▼           ▼                       │
-│   ┌──────────────┐     ┌──────────────────────────┐               │
-│   │  svc/frontend│     │  svc/backend              │               │
-│   │  ClusterIP   │     │  ClusterIP                │               │
-│   └──────────────┘     └──────────┬───────────────┘               │
-│                                   │                               │
-│                                   ▼                               │
-│                          ┌──────────────┐                         │
-│                          │  postgres    │                         │
-│                          │  StatefulSet  │                         │
-│                          │  port 5432   │                         │
-│                          │  PVC: 5Gi    │                         │
-│                          └──────────────┘                         │
-│                                                                   │
+│   └──────────────┘     └──────┬───────┘   │                       │
+│                               │           ▼                       │
+│                               │    ┌──────────────┐               │
+│                               │    │  postgres    │               │
+│                               └───▶│  :5432       │               │
+│                                    └──────────────┘               │
 │   ┌──────────────────────────────────────────────┐               │
 │   │  ingress-nginx — taskflow.home (TLS)          │               │
-│   │  /api → backend:8080    / → frontend:80      │               │
 │   └──────────────────────────────────────────────┘               │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## 🛠 Tech Stack
+## Tech Stack
 
-| Layer | Technology | Why |
-|-------|-----------|-----|
-| **Frontend** | React 18 + TypeScript + Tailwind CSS 3.4 + Vite 5 | Industry standard, type-safe, fast builds |
-| **Drag & Drop** | @hello-pangea/dnd | Maintained fork of react-beautiful-dnd |
-| **Animation** | Framer Motion 11 | Smooth KANBAN column transitions, card animations |
-| **Icons** | Lucide React | Clean, consistent icon set |
-| **Backend** | Python 3.13 + FastAPI + SQLAlchemy 2.0 | Async Python, automatic OpenAPI docs |
-| **Database** | PostgreSQL 16 + asyncpg | Robust, k8s-native via StatefulSet |
-| **Infra** | Kubernetes (kubeadm, 6-node bare-metal) | My CKA exam environment is my production environment |
-| **Ingress** | ingress-nginx + cert-manager | TLS termination, path-based routing |
-| **Containers** | Docker multi-stage builds | Small images (backend ~180MB, frontend ~50MB) |
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React 18 + TypeScript + Tailwind CSS 3.4 + Vite 5 |
+| **Drag & Drop** | @hello-pangea/dnd |
+| **Animation** | Framer Motion 11 |
+| **Icons** | Lucide React |
+| **Charts** | Hand-rolled SVG (BurnChart) |
+| **Backend** | Python 3.13 + FastAPI + SQLAlchemy 2.0 (async) + asyncpg |
+| **Database** | PostgreSQL 16 (StatefulSet, 5Gi PVC) |
+| **Infra** | Kubernetes (kubeadm, 6-node bare-metal), containerd |
+| **Ingress** | ingress-nginx + cert-manager |
+| **Containers** | Docker multi-stage builds |
 
-## 📊 Database Schema
+## Telemetry Engine
 
-Three tables — tracks, tasks, and task_notes — with cascade deletes and proper indexing:
+The `telemetry.ts` module powers both the Runway and BurnChart views:
 
-- **tracks** — the major objects (CKA Course, Ansible Fleet, Job Search, etc.) with category, priority, target date, and computed completion %
-- **tasks** — subtasks within a track with weight, KANBAN column position, scheduled day, completion notes, and progress tracking (step X of Y)
-- **task_notes** — free-form notes under any task for capturing context (paste errors, decisions, links)
+| Metric | Calculation |
+|--------|-------------|
+| **Velocity** | Tasks completed in last 21 days ÷ 3 (tasks/week) |
+| **ETA** | Remaining tasks ÷ daily velocity → projected completion date |
+| **Margin** | Target date − ETA (positive = ahead, negative = behind) |
+| **Sparkline** | Per-week completions over past 8 weeks |
+| **Intercept State** | `nominal` / `caution` (≤7d behind) / `behind` / `stalled` / `idle` / `shipped` |
 
-Full schema in [`architecture.md`](architecture.md).
+### Intercept States
 
-## 🔌 API Endpoints
+```
+  SHIPPED  ████████████████████▓▓▓▓▓▓▓▓▓▓  DONE
+  NOMINAL  ██████████████░░░░░░░░░░░▓▓▓▓▓  ON TRACK
+  CAUTION  ██████████░░░░░░░░░░░░░░░░░▓▓▓  ≤7 DAYS BEHIND
+  BEHIND   ██████░░░░░░░░░░░░░░░░░░░░░░▓▓  BEHIND SCHEDULE
+  STALLED  ██████░░░░░░░░░░░░░░░░░░░░░░░░  VELOCITY = 0
+  IDLE     ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  NOT YET STARTED
+```
+
+## API Endpoints
 
 | Method | Path | Description |
 |--------|------|-------------|
 | `GET` | `/api/health` | Health check |
-| `GET` | `/api/dashboard` | Aggregate stats (total tracks/tasks/completion %) |
-| `GET` | `/api/tracks` | List all tracks with computed completion |
-| `POST` | `/api/tracks` | Create a track |
-| `PUT` | `/api/tracks/:id` | Update a track |
-| `DELETE` | `/api/tracks/:id` | Delete a track (cascades to tasks) |
-| `GET` | `/api/tasks` | List tasks (filter by `track_id`, `status`, `column_name`, `scheduled_day`) |
-| `POST` | `/api/tasks` | Create a task |
-| `PUT` | `/api/tasks/:id` | Update any task field |
-| `DELETE` | `/api/tasks/:id` | Delete a task |
-| `PUT` | `/api/tasks/reorder` | Batch reorder tasks within a column (KANBAN drag) |
-| `POST` | `/api/tasks/:id/notes` | Add a note to a task |
-| `DELETE` | `/api/notes/:id` | Delete a note |
+| `GET` | `/api/dashboard` | Aggregate stats |
+| `GET/POST` | `/api/tracks` | List / Create tracks |
+| `PUT/DELETE` | `/api/tracks/:id` | Update / Delete track |
+| `GET/POST` | `/api/tasks` | List / Create tasks (filter by track, status, column, day) |
+| `PUT/DELETE` | `/api/tasks/:id` | Update / Delete task |
+| `POST` | `/api/tasks/:id/notes` | Add note to task |
+| `GET` | `/api/health` | Health check |
 
-## 🚢 Deployment
-
-### Prerequisites
-- Kubernetes cluster (kubeadm, k3s, or any conformant distro)
-- ingress-nginx controller
-- cert-manager (for TLS) or a manually-provisioned TLS secret
-
-### Quick Start
-
-```bash
-# 1. Apply all manifests in order
-kubectl apply -f k8s/00-namespace.yaml
-kubectl apply -f k8s/01-postgres-secret.yaml
-kubectl apply -f k8s/02-postgres-pvc.yaml
-kubectl apply -f k8s/03-postgres.yaml
-kubectl apply -f k8s/04-backend.yaml
-kubectl apply -f k8s/05-frontend.yaml
-kubectl apply -f k8s/06-ingress.yaml
-
-# 2. Wait for PostgreSQL to be ready
-kubectl -n taskflow wait --for=condition=ready pod -l app=postgres --timeout=120s
-
-# 3. Seed the database
-kubectl -n taskflow run db-seed --rm -i --restart=Never --image=taskflow-backend:latest \
-  --env="DATABASE_URL=$(kubectl -n taskflow get secret postgres-credentials -o jsonpath='{.data.DATABASE_URL}' | base64 -d)" \
-  -- python3 /app/seed.py
-
-# 4. Verify
-curl -k https://taskflow.home/api/health
-# → {"status":"ok"}
-
-curl -k https://taskflow.home/api/tracks | jq '.[].name'
-# → "CKA Course", "Ansible Fleet Project", ...
-```
-
-### Building From Source
-
-```bash
-# Backend
-cd backend
-docker build -t taskflow-backend:latest .
-
-# Frontend
-cd frontend
-npm install && npm run build
-docker build -t taskflow-frontend:latest .
-```
-
-## 🎨 Frontend Features
-
-- **4-column KANBAN board:** Backlog → Todo → In Progress → Done
-- **Drag-and-drop** between columns with instant API persistence
-- **Task cards** show: weight bar, scheduled day badge (overdue/today/soon/future), completion notes indicator, notes count, step progress bar
-- **Sidebar** with track list, mini health bars, and filtering (click a track to dim other tasks)
-- **Task detail panel** (slide-in from right): full edit, notes thread, completion notes field
-- **Health bars panel** — animated per-track progress bars for the big-picture view
-- **Sound effects** using Web Audio API: drop pluck, task-complete arpeggio, track-complete fanfare (toggleable, persisted in localStorage)
-- **Dark-only theme** — base `#0F1117` with blue/emerald accent gradients
-- **`prefers-reduced-motion`** support
-- **Custom scrollbars** — thin, dark, polished
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 taskflow/
+├── README.md
+├── LICENSE
+├── architecture.md
 ├── backend/
 │   ├── Dockerfile
 │   ├── requirements.txt
-│   ├── seed.py                    # Database seed script
+│   ├── seed.py
 │   └── app/
-│       ├── main.py                # FastAPI app entry
-│       ├── config.py              # Settings (DATABASE_URL, etc.)
-│       ├── database.py            # SQLAlchemy async engine + session
-│       ├── models.py              # ORM models (Track, Task, TaskNote)
-│       ├── schemas.py             # Pydantic request/response schemas
-│       ├── routes_tracks.py       # /api/tracks endpoints
-│       └── routes_tasks.py        # /api/tasks + /api/notes endpoints
+│       ├── main.py              # FastAPI entry
+│       ├── config.py            # Settings
+│       ├── database.py          # SQLAlchemy async engine
+│       ├── models.py            # ORM models
+│       ├── schemas.py           # Pydantic schemas
+│       ├── routes_tracks.py     # /api/tracks
+│       └── routes_tasks.py      # /api/tasks + notes
 ├── frontend/
 │   ├── Dockerfile
 │   ├── vite.config.ts
 │   ├── tailwind.config.js
 │   └── src/
-│       ├── App.tsx                # Root component
-│       ├── api.ts                 # API client (typed fetch wrapper)
-│       ├── types.ts               # TypeScript interfaces
-│       ├── sounds.ts              # Web Audio API sound effects
+│       ├── App.tsx              # Root + view toggle
+│       ├── api.ts               # Typed fetch wrapper
+│       ├── types.ts             # TypeScript interfaces
+│       ├── sounds.ts            # Web Audio API sound effects
+│       ├── telemetry.ts         # Velocity, ETA, intercept math
 │       ├── hooks/
-│       │   ├── useTaskFlow.ts     # Central state: tracks, tasks, CRUD, drag
-│       │   └── useCountUp.ts      # Animated number counter
+│       │   ├── useTaskFlow.ts   # Central state
+│       │   └── useCountUp.ts    # Animated counters
 │       └── components/
-│           ├── KanbanBoard.tsx    # 4-column drag-and-drop board
-│           ├── KanbanColumn.tsx   # Single column with droppable zone
-│           ├── TaskCard.tsx       # Draggable task card
-│           ├── TaskDetailModal.tsx # Slide-in task detail panel
-│           ├── AddTaskModal.tsx   # Create-task form
-│           ├── AddTrackModal.tsx  # Create-track form
-│           ├── Sidebar.tsx        # Track list + health bars
-│           ├── TopBar.tsx         # Header with date, sound toggle, Add Task
-│           ├── HealthBar.tsx      # Single animated progress bar
-│           ├── HealthBarsPanel.tsx # All-track health overview
-│           ├── Modal.tsx          # Reusable modal shell
-│           ├── Markdown.tsx       # Lightweight markdown renderer
-│           └── ui.tsx             # Button, Input, Select, Badge primitives
+│           ├── RunwayBoard.tsx   # ★ v2.0: timeline + drag-to-reschedule
+│           ├── BurnChart.tsx     # ★ v2.0: SVG cumulative burn-up
+│           ├── KanbanBoard.tsx   # 4-column drag-and-drop
+│           ├── KanbanColumn.tsx
+│           ├── TaskCard.tsx
+│           ├── TaskDetailModal.tsx
+│           ├── AddTaskModal.tsx
+│           ├── AddTrackModal.tsx
+│           ├── Sidebar.tsx
+│           ├── TopBar.tsx        # View toggle + sound toggle
+│           ├── HealthBar.tsx
+│           └── ui.tsx
 └── k8s/
     ├── 00-namespace.yaml
     ├── 01-postgres-secret.yaml
@@ -213,23 +187,27 @@ taskflow/
     └── 06-ingress.yaml
 ```
 
-## 🧠 Why This Matters
+## Sound Design
+
+| Event | Audio (Web Audio API) |
+|-------|----------------------|
+| Task dropped (reorder) | Triangle pluck |
+| Task completed | 3-tone arpeggio (C5, F#5, B4) |
+| Track fully completed | 6-tone celebratory fanfare |
+
+Mute toggle persisted in `localStorage` (`taskflow.sound`).
+
+## Why This Matters
 
 This project demonstrates the full DevOps loop on real infrastructure:
 
-- **Infrastructure as Code** — every resource is a Kubernetes manifest, not a click
-- **Container-native** — multi-stage Docker builds, private registry, image distribution across 6 nodes
-- **Database operations** — PostgreSQL StatefulSet with PVC persistence, schema migrations, seed scripts
-- **Networking** — ingress-nginx path routing, TLS termination via cert-manager, Pi-hole local DNS
-- **API design** — RESTful, async Python, proper error handling, query parameter filtering
-- **Frontend engineering** — TypeScript throughout, custom hooks, drag-and-drop, Web Audio API, accessibility
-- **Debugging** — real-world troubleshooting across pods, services, containerd, and ingress
-
-It's the kind of project that answers "what have you built?" in an interview with a live demo.
-
-## 📝 License
-
-MIT — use it, fork it, deploy it, learn from it.
+- **Real k8s** — 6-node bare-metal cluster, not minikube
+- **Real database** — PostgreSQL StatefulSet with PVC persistence
+- **Real networking** — ingress-nginx, cert-manager TLS, Pi-hole local DNS
+- **Real containers** — multi-stage Docker builds, containerd image distribution across nodes
+- **Real telemetry** — rolling velocity, ETA projection, intercept states (not just CRUD)
+- **Real UI complexity** — dual view modes, pointer-event drag scheduling, SVG charting, Web Audio API
+- **Real portfolio** — 12 active tracks, 108+ tasks, tracking actual certification and project progress
 
 ---
 
