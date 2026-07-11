@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Build output
+frontend/dist/
+*.tar
+
+# Environment
+.env
+.env.local
+.env.production
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.tar
+
+# Secrets (k8s manifests reference secrets by name — never commit real values)
+*-secret.yaml
+!k8s/01-postgres-secret.yaml  # Template only — fill in real values
+
+# Python
+*.egg-info/
+dist/
+build/
