@@ -152,7 +152,7 @@ export function AddTaskModal({ tracks, defaultTrackId, onClose, onCreate }: AddT
                 />
                 <button
                   onClick={() => removeSubtask(i)}
-                  className="rounded-md p-1.5 text-zinc-600 transition hover:bg-white/5 hover:text-rose-300"
+                  className="rounded-md p-1.5 text-zinc-600 transition hover:bg-white/5 hover:text-alert"
                   aria-label="Remove subtask"
                 >
                   <X size={13} />

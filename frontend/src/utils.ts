@@ -38,7 +38,7 @@ export function lerpColor(a: string, b: string, t: number): string {
   return `rgb(${m[0]}, ${m[1]}, ${m[2]})`;
 }
 
-export const HEALTH_GRADIENT = 'linear-gradient(90deg, #3B82F6, #10B981)';
+export const HEALTH_GRADIENT = 'linear-gradient(90deg, #2CBE8C, #3FE0A8)';
 
 /**
  * Sizes the blue→green gradient to the FULL bar width so a partial fill
@@ -56,7 +56,7 @@ export function healthFillStyle(percent: number): CSSProperties {
 /** Glow that intensifies with completion, shifting blue → emerald. */
 export function healthGlow(percent: number): string {
   const p = clamp(percent, 0, 100) / 100;
-  const color = lerpColor('#3B82F6', '#10B981', p);
+  const color = lerpColor('#2CBE8C', '#3FE0A8', p);
   const blur = Math.round(6 + p * 16);
   const alpha = 0.22 + p * 0.38;
   return `0 0 ${blur}px ${rgba(color.startsWith('rgb') ? rgbToHex(color) : color, alpha)}, inset 0 1px 0 rgba(255,255,255,0.18)`;
@@ -64,7 +64,7 @@ export function healthGlow(percent: number): string {
 
 function rgbToHex(rgb: string): string {
   const m = rgb.match(/\d+/g);
-  if (!m) return '#3B82F6';
+  if (!m) return '#3FE0A8';
   return (
     '#' +
     m
@@ -128,18 +128,18 @@ export function todayString(): string {
 // ————————————————————————————————————————————————————————————————
 
 export const COLUMNS: Array<{ id: ColumnName; title: string; color: string }> = [
-  { id: 'backlog', title: 'Backlog', color: '#6B7280' },
-  { id: 'todo', title: 'Todo', color: '#F59E0B' },
-  { id: 'in-progress', title: 'In Progress', color: '#3B82F6' },
-  { id: 'done', title: 'Done', color: '#10B981' },
+  { id: 'backlog', title: 'Backlog', color: '#5E6A63' },
+  { id: 'todo', title: 'Todo', color: '#FFB454' },
+  { id: 'in-progress', title: 'In Progress', color: '#6BC7E8' },
+  { id: 'done', title: 'Done', color: '#3FE0A8' },
 ];
 
 export const STATUS_META: Record<TaskStatus, { label: string; color: string }> = {
-  'not-started': { label: 'Not started', color: '#6B7280' },
-  'in-progress': { label: 'In progress', color: '#3B82F6' },
-  complete: { label: 'Complete', color: '#10B981' },
-  blocked: { label: 'Blocked', color: '#F43F5E' },
-  skipped: { label: 'Skipped', color: '#71717A' },
+  'not-started': { label: 'Not started', color: '#5E6A63' },
+  'in-progress': { label: 'In progress', color: '#6BC7E8' },
+  complete: { label: 'Complete', color: '#3FE0A8' },
+  blocked: { label: 'Blocked', color: '#FF5C5C' },
+  skipped: { label: 'Skipped', color: '#5E6A63' },
 };
 
 export const STATUS_ORDER: TaskStatus[] = [
@@ -151,11 +151,11 @@ export const STATUS_ORDER: TaskStatus[] = [
 ];
 
 export const CATEGORY_META: Record<TrackCategory, { label: string; color: string }> = {
-  cert: { label: 'Cert', color: '#8B5CF6' },
-  project: { label: 'Project', color: '#3B82F6' },
-  course: { label: 'Course', color: '#F59E0B' },
-  'side-quest': { label: 'Side quest', color: '#EC4899' },
-  meta: { label: 'Meta', color: '#06B6D4' },
+  cert: { label: 'Cert', color: '#B79CFF' },
+  project: { label: 'Project', color: '#6BC7E8' },
+  course: { label: 'Course', color: '#FFB454' },
+  'side-quest': { label: 'Side quest', color: '#FF8FB1' },
+  meta: { label: 'Meta', color: '#7FE8D9' },
 };
 
 export const CATEGORY_ORDER: TrackCategory[] = ['cert', 'project', 'course', 'side-quest', 'meta'];

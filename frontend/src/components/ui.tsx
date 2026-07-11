@@ -36,9 +36,9 @@ export function Button({
 }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariant }) {
   const variants: Record<ButtonVariant, string> = {
     primary:
-      'bg-accent text-white shadow-[0_0_12px_rgba(59,130,246,0.28)] hover:bg-blue-500 hover:shadow-[0_0_18px_rgba(59,130,246,0.5)]',
+      'bg-accent text-accent-ink shadow-[0_0_12px_rgba(63,224,168,0.28)] hover:brightness-110 hover:shadow-[0_0_18px_rgba(63,224,168,0.5)]',
     ghost: 'text-zinc-400 hover:bg-white/5 hover:text-zinc-100',
-    danger: 'bg-rose-500/15 text-rose-300 border border-rose-500/30 hover:bg-rose-500/25',
+    danger: 'bg-alert/15 text-alert border border-alert/30 hover:bg-alert/25',
   };
   return (
     <button

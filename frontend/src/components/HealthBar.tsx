@@ -31,7 +31,7 @@ export function HealthBar({ track }: { track: Track }) {
       <div className="grid grid-cols-[9.5rem_1fr_3.25rem] items-center gap-3">
         {/* Name */}
         <div className="flex min-w-0 items-center gap-1.5">
-          {shipped && <Trophy size={12} className="shrink-0 text-amber-400" />}
+          {shipped && <Trophy size={12} className="shrink-0 text-amber" />}
           <span className="truncate text-xs font-semibold text-zinc-300" title={track.name}>
             {track.name}
           </span>
@@ -71,7 +71,7 @@ export function HealthBar({ track }: { track: Track }) {
         <span
           className={cx(
             'text-right font-mono text-xs tabular-nums',
-            pct >= 100 ? 'font-bold text-emerald-400' : 'text-zinc-400',
+            pct >= 100 ? 'font-bold text-accent' : 'text-zinc-400',
           )}
         >
           {displayed}%

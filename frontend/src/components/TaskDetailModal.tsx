@@ -239,7 +239,7 @@ export function TaskDetailModal({ task, tracks, onClose, onSave, onAddNote }: Ta
               </span>
               <button
                 onClick={() => setDraft((d) => ({ ...d, progress: null, total_steps: null }))}
-                className="text-[11px] text-zinc-600 transition hover:text-rose-300"
+                className="text-[11px] text-zinc-600 transition hover:text-alert"
               >
                 Remove
               </button>
@@ -259,7 +259,7 @@ export function TaskDetailModal({ task, tracks, onClose, onSave, onAddNote }: Ta
         {completing && (
           <div className="animate-fade-in rounded-xl border border-emerald-500/25 bg-emerald-500/[0.06] p-3.5">
             <div className="mb-2 flex items-center justify-between">
-              <span className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-400">
+              <span className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-accent">
                 <ClipboardCheck size={13} />
                 Resolution
               </span>

@@ -35,20 +35,20 @@ const T = (t: Omit<Task, 'description' | 'progress' | 'total_steps' | 'scheduled
 
 export const MOCK_TASKS: Task[] = [
   // ——— BACKLOG ———————————————————————————————————————————
-  T({ id: 't07', track_id: '1', name: 'Network Policies + LAB', weight: 2, status: 'not-started', sort_order: 0, column_name: 'backlog' }),
-  T({ id: 't08', track_id: '1', name: 'kubeadm cluster upgrade drill', weight: 2, status: 'not-started', sort_order: 1, column_name: 'backlog' }),
-  T({ id: 't09', track_id: '1', name: 'ETCD backup & restore drill', weight: 2, status: 'not-started', sort_order: 2, column_name: 'backlog' }),
+  T({ id: 't07', track_id: '1', name: 'Network Policies + LAB', weight: 2, status: 'not-started', sort_order: 0, column_name: 'backlog', scheduled_day: '2026-07-15' }),
+  T({ id: 't08', track_id: '1', name: 'kubeadm cluster upgrade drill', weight: 2, status: 'not-started', sort_order: 1, column_name: 'backlog', scheduled_day: '2026-07-17' }),
+  T({ id: 't09', track_id: '1', name: 'ETCD backup & restore drill', weight: 2, status: 'not-started', sort_order: 2, column_name: 'backlog', scheduled_day: '2026-07-18' }),
   T({ id: 't10', track_id: '1', name: 'Mock Exam 1 (killer.sh)', weight: 5, status: 'not-started', sort_order: 3, column_name: 'backlog', scheduled_day: '2026-07-19' }),
-  T({ id: 't14', track_id: '2', name: 'Handlers (02:23) + Roles (07:46)', weight: 2, status: 'not-started', sort_order: 4, column_name: 'backlog' }),
-  T({ id: 't15', track_id: '2', name: 'Templates + Jinja2 (09:12)', weight: 2, status: 'not-started', sort_order: 5, column_name: 'backlog' }),
-  T({ id: 't16', track_id: '2', name: 'Ansible Vault (04:48)', weight: 1, status: 'not-started', sort_order: 6, column_name: 'backlog' }),
-  T({ id: 't20', track_id: '3', name: 'requests + API polling script', weight: 2, status: 'not-started', sort_order: 7, column_name: 'backlog' }),
+  T({ id: 't14', track_id: '2', name: 'Handlers (02:23) + Roles (07:46)', weight: 2, status: 'not-started', sort_order: 4, column_name: 'backlog', scheduled_day: '2026-07-16' }),
+  T({ id: 't15', track_id: '2', name: 'Templates + Jinja2 (09:12)', weight: 2, status: 'not-started', sort_order: 5, column_name: 'backlog', scheduled_day: '2026-07-21' }),
+  T({ id: 't16', track_id: '2', name: 'Ansible Vault (04:48)', weight: 1, status: 'not-started', sort_order: 6, column_name: 'backlog', scheduled_day: '2026-07-22' }),
+  T({ id: 't20', track_id: '3', name: 'requests + API polling script', weight: 2, status: 'not-started', sort_order: 7, column_name: 'backlog', scheduled_day: '2026-07-24' }),
   T({ id: 't21', track_id: '3', name: 'pytest fundamentals', weight: 2, status: 'not-started', sort_order: 8, column_name: 'backlog' }),
-  T({ id: 't24', track_id: '4', name: 'Base role: users + SSH hardening', weight: 3, status: 'not-started', sort_order: 9, column_name: 'backlog' }),
-  T({ id: 't25', track_id: '4', name: 'Patch management playbook', weight: 2, status: 'not-started', sort_order: 10, column_name: 'backlog' }),
-  T({ id: 't26', track_id: '4', name: 'pfSense VLAN inventory groups', weight: 2, status: 'not-started', sort_order: 11, column_name: 'backlog' }),
-  T({ id: 't28', track_id: '5', name: 'Pipeline stages: lint → test → build', weight: 3, status: 'not-started', sort_order: 12, column_name: 'backlog' }),
-  T({ id: 't29', track_id: '5', name: 'Deploy stage → k8s (kubectl apply)', weight: 3, status: 'not-started', sort_order: 13, column_name: 'backlog' }),
+  T({ id: 't24', track_id: '4', name: 'Base role: users + SSH hardening', weight: 3, status: 'not-started', sort_order: 9, column_name: 'backlog', scheduled_day: '2026-07-19' }),
+  T({ id: 't25', track_id: '4', name: 'Patch management playbook', weight: 2, status: 'not-started', sort_order: 10, column_name: 'backlog', scheduled_day: '2026-07-23' }),
+  T({ id: 't26', track_id: '4', name: 'pfSense VLAN inventory groups', weight: 2, status: 'not-started', sort_order: 11, column_name: 'backlog', scheduled_day: '2026-07-26' }),
+  T({ id: 't28', track_id: '5', name: 'Pipeline stages: lint → test → build', weight: 3, status: 'not-started', sort_order: 12, column_name: 'backlog', scheduled_day: '2026-07-28' }),
+  T({ id: 't29', track_id: '5', name: 'Deploy stage → k8s (kubectl apply)', weight: 3, status: 'not-started', sort_order: 13, column_name: 'backlog', scheduled_day: '2026-07-30' }),
   T({ id: 't30', track_id: '5', name: 'Container registry (Harbor eval)', weight: 2, status: 'not-started', sort_order: 14, column_name: 'backlog' }),
   T({ id: 't31', track_id: '6', name: 'LiteLLM proxy spike', weight: 2, status: 'not-started', sort_order: 15, column_name: 'backlog' }),
   T({ id: 't32', track_id: '6', name: 'Route local Hermes ↔ OpenRouter fallback', weight: 3, status: 'blocked', sort_order: 16, column_name: 'backlog', description: 'Blocked on the provider allow-list — currently pinned to two providers.' }),
@@ -56,13 +56,13 @@ export const MOCK_TASKS: Task[] = [
 
   // ——— TODO ——————————————————————————————————————————————
   T({ id: 't05', track_id: '1', name: 'DNS in k8s + CoreDNS + LAB', weight: 3, status: 'not-started', sort_order: 0, column_name: 'todo', scheduled_day: '2026-07-11', description: 'CoreDNS Corefile, stub domains, and the `cluster.local` search path. Break it, then fix it.' }),
-  T({ id: 't06', track_id: '1', name: 'Ingress Controllers + LAB', weight: 3, status: 'not-started', sort_order: 1, column_name: 'todo' }),
+  T({ id: 't06', track_id: '1', name: 'Ingress Controllers + LAB', weight: 3, status: 'not-started', sort_order: 1, column_name: 'todo', scheduled_day: '2026-07-12' }),
   T({ id: 't17', track_id: '2', name: 'Conditionals & Loops + LAB', weight: 2, status: 'not-started', sort_order: 2, column_name: 'todo', scheduled_day: '2026-07-12' }),
   T({ id: 't19', track_id: '3', name: 'Repo init + README manifesto', weight: 1, status: 'not-started', sort_order: 3, column_name: 'todo', scheduled_day: '2026-07-13' }),
-  T({ id: 't22', track_id: '3', name: 'argparse CLI skeleton', weight: 2, status: 'not-started', sort_order: 4, column_name: 'todo' }),
+  T({ id: 't22', track_id: '3', name: 'argparse CLI skeleton', weight: 2, status: 'not-started', sort_order: 4, column_name: 'todo', scheduled_day: '2026-07-15' }),
   T({ id: 't27', track_id: '4', name: 'Bootstrap playbook for ld + lh', weight: 3, status: 'not-started', sort_order: 5, column_name: 'todo', scheduled_day: '2026-07-14', description: 'Targets the Debian 12 + Ubuntu 20.04 VMs on the new VLAN. Remember the pfSense rule: **Any**, not TCP-only.' }),
   T({ id: 't35', track_id: '7', name: 'Apply: 5 cloud roles (Central PA)', weight: 3, status: 'not-started', sort_order: 6, column_name: 'todo', scheduled_day: '2026-07-10', description: 'Healthcare systems, insurance/finance, MSPs, higher ed. Tailor each cover note to the stack.' }),
-  T({ id: 't36', track_id: '7', name: 'LinkedIn overhaul + banner', weight: 2, status: 'not-started', sort_order: 7, column_name: 'todo' }),
+  T({ id: 't36', track_id: '7', name: 'LinkedIn overhaul + banner', weight: 2, status: 'not-started', sort_order: 7, column_name: 'todo', scheduled_day: '2026-07-11' }),
 
   // ——— IN PROGRESS ———————————————————————————————————————
   T({
@@ -105,4 +105,17 @@ export const MOCK_TASKS: Task[] = [
   }),
   T({ id: 't39', track_id: '8', name: 'v1.0 tag + release notes', weight: 2, status: 'complete', sort_order: 9, column_name: 'done', completed_at: '2026-07-09T20:15:00Z' }),
   T({ id: 't40', track_id: '8', name: 'Architecture diagram + README polish', weight: 2, status: 'complete', sort_order: 10, column_name: 'done', completed_at: '2026-07-09T21:40:00Z' }),
+  // ——— HISTORY (v2.1 demo data: past 8 weeks of timestamped completions) ———
+  T({ id: 'h01', track_id: '1', name: 'Pods & ReplicaSets drill', weight: 1, status: 'complete', sort_order: 20, column_name: 'done', completed_at: '2026-05-19T20:10:00Z' }),
+  T({ id: 'h02', track_id: '1', name: 'Deployments + rollouts LAB', weight: 2, status: 'complete', sort_order: 21, column_name: 'done', completed_at: '2026-05-26T19:05:00Z' }),
+  T({ id: 'h03', track_id: '1', name: 'ConfigMaps & Secrets LAB', weight: 1, status: 'complete', sort_order: 22, column_name: 'done', completed_at: '2026-06-02T21:00:00Z' }),
+  T({ id: 'h04', track_id: '1', name: 'Scheduling: taints + affinity', weight: 2, status: 'complete', sort_order: 23, column_name: 'done', completed_at: '2026-06-09T18:45:00Z' }),
+  T({ id: 'h05', track_id: '1', name: 'Static pods + kubelet debug', weight: 2, status: 'complete', sort_order: 24, column_name: 'done', completed_at: '2026-06-16T22:20:00Z' }),
+  T({ id: 'h06', track_id: '1', name: 'Deployment vs RS adoption', weight: 1, status: 'complete', sort_order: 25, column_name: 'done', completed_at: '2026-06-21T17:30:00Z' }),
+  T({ id: 'h07', track_id: '1', name: 'kubectl manifest generation', weight: 1, status: 'complete', sort_order: 26, column_name: 'done', completed_at: '2026-06-27T20:55:00Z' }),
+  T({ id: 'h08', track_id: '1', name: 'Storage: PV/PVC + NFS CSI', weight: 2, status: 'complete', sort_order: 27, column_name: 'done', completed_at: '2026-07-01T19:15:00Z' }),
+  T({ id: 'h09', track_id: '2', name: 'Install + inventory basics', weight: 1, status: 'complete', sort_order: 28, column_name: 'done', completed_at: '2026-06-12T16:40:00Z' }),
+  T({ id: 'h10', track_id: '2', name: 'First playbook on Proxmox lab', weight: 2, status: 'complete', sort_order: 29, column_name: 'done', completed_at: '2026-06-24T21:10:00Z' }),
+  T({ id: 'h11', track_id: '2', name: 'Modules survey (05:11)', weight: 1, status: 'complete', sort_order: 30, column_name: 'done', completed_at: '2026-06-30T18:00:00Z' }),
+  T({ id: 'h12', track_id: '3', name: 'Python refresher: dicts + comprehensions', weight: 1, status: 'complete', sort_order: 31, column_name: 'done', completed_at: '2026-06-25T20:30:00Z' }),
 ];

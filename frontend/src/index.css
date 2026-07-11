@@ -9,13 +9,30 @@ body,
 }
 
 body {
-  @apply bg-base font-sans text-zinc-200 antialiased;
+  @apply bg-base font-sans text-ink antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ————— CRT texture: faint static scanlines over the whole console ————— */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(190, 255, 220, 0.014) 0px,
+    rgba(190, 255, 220, 0.014) 1px,
+    transparent 1px,
+    transparent 3px
+  );
 }
 
 /* ————— scrollbars ————— */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+  scrollbar-color: rgba(170, 240, 205, 0.14) transparent;
 }
 *::-webkit-scrollbar {
   width: 8px;
@@ -25,11 +42,11 @@ body {
   background: transparent;
 }
 *::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(170, 240, 205, 0.12);
   border-radius: 999px;
 }
 *::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(170, 240, 205, 0.24);
 }
 
 /* ————— native form controls in dark ————— */
@@ -40,11 +57,26 @@ select {
 }
 
 input[type='range'] {
-  accent-color: #3b82f6;
+  accent-color: #3fe0a8;
 }
 
 ::selection {
-  background: rgba(59, 130, 246, 0.35);
+  background: rgba(63, 224, 168, 0.3);
+}
+
+:focus-visible {
+  outline: 1px solid rgba(63, 224, 168, 0.7);
+  outline-offset: 1px;
+}
+
+/* ————— runway blocks ————— */
+.runway-block {
+  touch-action: none; /* pointer-drag reschedule on touch devices */
+}
+.runway-block.dragging {
+  cursor: grabbing;
+  z-index: 30;
+  box-shadow: 0 0 0 1px rgba(63, 224, 168, 0.6), 0 6px 18px rgba(0, 0, 0, 0.6);
 }
 
 /* Respect users who prefer reduced motion */

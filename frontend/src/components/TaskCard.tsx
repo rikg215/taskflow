@@ -82,7 +82,7 @@ export function TaskCard({ task, index, track, dimmed, onOpen, onUpdate, onDelet
             className={cx(
               'group relative cursor-pointer rounded-xl border bg-surface p-3 transition-all duration-150',
               snapshot.isDragging
-                ? 'scale-[1.02] border-accent/60 shadow-[0_14px_36px_rgba(0,0,0,0.55),0_0_22px_rgba(59,130,246,0.28)]'
+                ? 'scale-[1.02] border-accent/60 shadow-[0_14px_36px_rgba(0,0,0,0.55),0_0_22px_rgba(63,224,168,0.28)]'
                 : 'border-white/[0.06] shadow-card hover:-translate-y-0.5 hover:border-white/[0.14]',
               done && 'opacity-75',
             )}
@@ -112,8 +112,8 @@ export function TaskCard({ task, index, track, dimmed, onOpen, onUpdate, onDelet
                 className={cx(
                   'rounded-md p-1 transition',
                   confirmDelete
-                    ? 'bg-rose-500/20 text-rose-300'
-                    : 'text-zinc-400 hover:bg-white/10 hover:text-rose-300',
+                    ? 'bg-alert/20 text-alert'
+                    : 'text-zinc-400 hover:bg-white/10 hover:text-alert',
                 )}
               >
                 <Trash2 size={12} />
@@ -144,7 +144,7 @@ export function TaskCard({ task, index, track, dimmed, onOpen, onUpdate, onDelet
                         onUpdate(task.id, { scheduled_day: null });
                         setScheduling(false);
                       }}
-                      className="ml-2 text-[11px] text-zinc-500 transition hover:text-rose-300"
+                      className="ml-2 text-[11px] text-zinc-500 transition hover:text-alert"
                     >
                       Clear
                     </button>
@@ -187,8 +187,8 @@ export function TaskCard({ task, index, track, dimmed, onOpen, onUpdate, onDelet
                 <span
                   className={cx(
                     'flex items-center gap-1 rounded-md px-1.5 py-0.5 font-mono text-[10px] leading-none',
-                    scheduled.tone === 'overdue' && !done && 'bg-rose-500/15 text-rose-300',
-                    scheduled.tone === 'today' && 'bg-accent/15 text-blue-300',
+                    scheduled.tone === 'overdue' && !done && 'bg-alert/15 text-alert',
+                    scheduled.tone === 'today' && 'bg-accent/15 text-accent',
                     (scheduled.tone === 'soon' || scheduled.tone === 'future' || (scheduled.tone === 'overdue' && done)) &&
                       'bg-white/5 text-zinc-400',
                   )}
