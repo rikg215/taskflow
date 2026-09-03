@@ -35,8 +35,8 @@
  CKA ┊[Networking]══╗  ┊[Service Net] ┊          ┊ [Ingress═══════════╗
      ┊              ║  ┊[DNS+CoreDNS] ┊          ┊                    ║
      ┊              ╚══╝              ┊          ┊                    ╚══
- ANS ┊                               ┊          ┊ [Handlers+Roles]
-     ┊                               ┊          ┊
+ ANS ┊                                ┊          ┊ [Handlers+Roles]
+     ┊                                ┊          ┊
 ```
 
 - **Drag blocks horizontally** to reschedule tasks
