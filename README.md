@@ -45,6 +45,9 @@
 - **Red glow** = overdue, **green strikethrough** = done
 - **Target icons** mark track deadlines on each lane
 
+<img width="1912" height="933" alt="image" src="https://github.com/user-attachments/assets/26ab5a0f-6025-4415-b770-e3f79d686a6a" />
+
+
 ### 📋 KANBAN (Board View)
 ```
   BACKLOG          TODO          IN PROGRESS        DONE
@@ -58,6 +61,9 @@
 - Classic 4-column KANBAN with full drag-and-drop
 - Task cards show weight bar, scheduled day badge, progress, notes count
 - Dragging to "Done" auto-completes
+
+<img width="1912" height="933" alt="image" src="https://github.com/user-attachments/assets/f3969d56-2a5a-4731-9d12-4621b7c0e7b2" />
+
 
 ## Architecture
 
