@@ -212,4 +212,3 @@ This project demonstrates the full DevOps loop on real infrastructure:
 ---
 
 *Built by [Ricky Ghuman](https://github.com/rikg215) — Army Veteran (25U Signal) → LFCS → Terraform Associate → CKA (Sep 2026).*
-*This IS the portfolio piece.*
